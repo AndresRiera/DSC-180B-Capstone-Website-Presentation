@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -23,11 +23,11 @@
         <li><a href="#team">Team</a></li>
       </ul>
     </nav>
-  </header>
+  </header> -->
 
-<main>
+<!-- <main> -->
   <!-- HOME SECTION -->
-  <section id="home" class="hero">
+  <!-- <section id="home" class="hero">
     <h1>Vera: Blockchain-Backed Trust</h1>
     <img src="img/logo.png" alt="Vera Logo">
     <p>Securely issue and verify using blockchain technology.</p>
@@ -46,10 +46,10 @@
       <li>Third-party verification without centralized authority.</li>
       <li>Support for revocation and future expansion.</li>
     </ul>
-  </section>
+  </section> -->
 
   <!-- ABOUT SECTION -->
-  <section id="about" class="content-section">
+  <!-- <section id="about" class="content-section">
     <h1>About Vera</h1>
     <p>
       Vera is a blockchain-native verification platform that enables universities to issue
@@ -61,10 +61,10 @@
       The system's design includes user authentication, credential issuance, verification workflows, and planned
       contract features such as revocation and batch verification.
     </p>
-  </section>
+  </section> -->
 
   <!-- DOCUMENTATION SECTION -->
-  <section id="docs" class="content-section">
+  <!-- <section id="docs" class="content-section">
     <h1>Documentation</h1>
 
     <div class="doc-box">
@@ -88,10 +88,10 @@
       <h2>Integration</h2>
       <p>Follow the repository's README for API usage, database setup, and frontend integration steps.</p>
     </div>
-  </section>
+  </section> -->
 
   <!-- TEAM SECTION -->
-  <section id="team" class="content-section">
+  <!-- <section id="team" class="content-section">
     <h1>Team Members</h1>
     <ul>
       <li>Snigdha Podugu - spodugu@ucsd.edu</li>
@@ -105,6 +105,210 @@
 
 <footer>
   <p>&copy; 2026 Vera Capstone Project</p>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Vera: Blockchain-Backed Trust</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<header>
+  <div class="header-content">
+    <a href="#home" class="logo-centered">
+      <img src="img/updated_logo.png" alt="Vera Logo">
+    </a>
+  </div>
+  <nav>
+    <ul>
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#docs">Documentation</a></li>
+      <li><a href="#architecture">Architecture</a></li>
+      <li><a href="#workflow">Workflow</a></li>
+      <li><a href="#team">Team</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main>
+
+<!-- HERO -->
+<section id="home" class="hero">
+  <h1>Vera: Blockchain-Backed Trust</h1>
+  <img src="img/updated_logo.png" alt="Vera Logo">
+  <p>A decentralized platform for verifying documents, datasets, and media with cryptographic certainty.</p>
+
+  <div class="cta-group">
+    <a href="https://github.com/FerdGitUCSD/b10-blockchain-blockthentic" class="btn btn-secondary" target="_blank">GitHub</a>
+    <a href="YOUR_POSTER_URL" class="btn btn-secondary" target="_blank">Poster</a>
+    <a href="YOUR_REPORT_URL" class="btn btn-secondary" target="_blank">Report</a>
+    <a href="YOUR_VERA_PROJECT_URL" class="btn btn-primary" target="_blank">Launch App</a>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features">
+  <h2>Core Capabilities</h2>
+  <ul>
+    <li>Decentralized verification with public blockchain trust guarantees.</li>
+    <li>Cryptographic fingerprinting ensures files cannot be altered undetected.</li>
+    <li>Issuer authorization prevents fraudulent registrations.</li>
+    <li>Revocation and updates supported through dynamic on-chain state.</li>
+    <li>Privacy-preserving design — only hashes stored on chain.</li>
+    <li>Supports documents, datasets, and visual media.</li>
+  </ul>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="content-section">
+  <h1>About Vera</h1>
+
+  <p>
+    Vera is a decentralized verification infrastructure designed to establish authenticity,
+    integrity, and traceability for digital assets. Traditional verification methods rely on
+    centralized institutions, manual review processes, or platform-specific trust assumptions,
+    which introduce delays, cost, and security vulnerabilities. Vera replaces these approaches
+    with a trustless verification model powered by Ethereum smart contracts and client-side
+    cryptographic hashing.
+  </p>
+
+  <p>
+    Instead of storing files on the blockchain, Vera records cryptographic fingerprints and
+    structured metadata. This ensures privacy while still allowing anyone to independently
+    confirm whether a file is genuine. Verification is modeled as a dynamic blockchain state,
+    meaning assets can be revoked, updated, or superseded without compromising auditability.
+  </p>
+
+  <!-- INSERT DIAGRAM HERE -->
+  <img src="img/Figure 2.png" alt="System Overview Diagram">
+
+  <p>
+    The platform is designed for real-world usability across institutions, enterprises, and
+    independent users, supporting scalable verification workflows without requiring technical
+    blockchain expertise.
+  </p>
+</section>
+
+<!-- DOCUMENTATION -->
+<section id="docs" class="content-section">
+  <h1>Technical Documentation</h1>
+
+  <div class="doc-box">
+    <h2>Smart Contract Layer</h2>
+    <p>
+      Vera uses a modular smart contract architecture where separate registries manage different
+      asset categories. Each registry maintains mappings between cryptographic hashes and
+      structured verification records.
+    </p>
+    <ul>
+      <li>Document Registry</li>
+      <li>Dataset Registry</li>
+      <li>Media Registry</li>
+      <li>Issuer Authorization Logic</li>
+      <li>Revocation and Status Management</li>
+    </ul>
+  </div>
+
+  <div class="doc-box">
+    <h2>Verification Engine</h2>
+    <p>
+      All verification occurs through deterministic hashing performed locally in the browser.
+      When a file is uploaded, the application computes its hash and compares it with on-chain
+      records using read-only smart contract queries. No raw data is transmitted to the network.
+    </p>
+  </div>
+
+  <div class="doc-box">
+    <h2>Off-Chain Infrastructure</h2>
+    <p>
+      Supporting infrastructure handles non-sensitive application logic including metadata
+      storage, issuer permissions, and user state. This separation reduces blockchain storage
+      costs while preserving transparency and verifiability.
+    </p>
+  </div>
+</section>
+
+<!-- ARCHITECTURE -->
+<section id="architecture" class="content-section">
+  <h1>System Architecture</h1>
+
+  <p>
+    Vera follows a layered architecture separating user interaction, application processing,
+    and blockchain verification. This design ensures modularity, security, and scalability.
+  </p>
+
+
+  <img src="img/Figure 1.png" alt="Architecture Diagram">
+
+  <p>
+    Users interact through a web interface where files are hashed locally and verification
+    requests are initiated. The application layer manages wallet connections and blockchain
+    queries. Smart contracts enforce verification logic, issuer permissions, and record
+    lifecycle state, while the Ethereum network acts as a tamper-resistant trust anchor.
+    Off-chain services store metadata and manage access control without exposing asset contents.
+  </p>
+</section>
+
+<!-- WORKFLOW -->
+<section id="workflow" class="content-section">
+  <h1>Verification Workflow</h1>
+
+  <p>
+    Vera supports three primary user roles: Issuers, Asset Holders, and Verifiers. Each role
+    interacts with the same infrastructure but through tailored interfaces that guide permitted
+    actions and reduce complexity.
+  </p>
+
+
+  <div class="workflow-images">
+    <img src="img/Figure 3.png" alt="Workflow Diagram">
+    <img src="img/Figure 4.png" alt="Third Party Verification Workflow Diagram">
+  </div>
+
+  <ul>
+    <li><strong>Issuers:</strong> Register assets, update records, or revoke validity.</li>
+    <li><strong>Holders:</strong> View and share verification proofs.</li>
+    <li><strong>Verifiers:</strong> Independently confirm authenticity without authentication.</li>
+  </ul>
+
+  <p>
+    This workflow ensures that verification remains transparent and independent while allowing
+    authorized entities to maintain lifecycle control over issued assets.
+  </p>
+</section>
+
+<section id="demo" class="content-section">
+  <h1>Demo</h1>
+</section>
+
+<!-- TEAM -->
+<section id="team" class="content-section">
+  <h1>Team</h1>
+  <ul>
+    <li>Snigdha Podugu — spodugu@ucsd.edu</li>
+    <li>Fred Danese — fdanese@ucsd.edu</li>
+    <li>Ryan Cheung — rycheung@ucsd.edu</li>
+    <li>Jonathan Gu — jogu@ucsd.edu</li>
+    <li>Andres Riera Ortiz Parraga — arieraortizparraga@ucsd.edu</li>
+    <li>Mentor: Rajesh Gupta — rgupta@ucsd.edu</li>
+  </ul>
+
+</section>
+
+</main>
+
+<footer>
+  <p>&copy; 2026 Vera Capstone Project — Decentralized Verification Infrastructure</p>
 </footer>
 
 <script src="js/main.js"></script>
