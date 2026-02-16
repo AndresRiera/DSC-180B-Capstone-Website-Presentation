@@ -38,21 +38,7 @@ body {
   line-height: 1.7;
   overflow-x: hidden;
 }
-/* Animated Background */
-/* body::before {
-  content: '';
-  position: fixed;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: radial-gradient(circle at 20% 50%, rgba(61, 78, 172, 0.15) 0%, transparent 50%),
-              radial-gradient(circle at 80% 80%, rgba(107, 136, 200, 0.1) 0%, transparent 50%),
-              radial-gradient(circle at 40% 20%, rgba(196, 227, 243, 0.05) 0%, transparent 50%);
-  animation: drift 20s ease-in-out infinite;
-  pointer-events: none;
-  z-index: 0;
-} */
+
 
 body::before {
   background:
