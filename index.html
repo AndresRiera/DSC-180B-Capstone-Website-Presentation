@@ -3,25 +3,381 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <title>Vera: Blockchain-Backed Trust</title>
-  <link rel="stylesheet" href="css/style_v2.css">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <title>Vera — Blockchain-Backed Trust</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy:        #FFF8E7;
+      --navy-2:      #FFFDF6;
+      --navy-3:      #EAF1FF;
+      --blue:        #3D4EAC;
+      --blue-mid:    #6B88C8;
+      --blue-light:  #3D4EAC;
+      --cyan:        #3D4EAC;
+      --white:       #001F54;
+      --gray:        #1a2a4a;
+      --gray-dim:    #3D4EAC;
+      --card-bg:     rgba(255,248,231,0.6);
+      --card-border: rgba(107,136,200,0.25);
+      --radius:      14px;
+      --section-gap: 110px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: linear-gradient(135deg, #6B88C8 0%, #FFF8E7 100%);
+      color: var(--white);
+      line-height: 1.72;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(circle at 20% 50%, rgba(107,136,200,0.25) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(255,248,231,0.35) 0%, transparent 50%), radial-gradient(circle at 40% 20%, rgba(159,180,228,0.25) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* HEADER */
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 5vw;
+      height: 66px;
+      background: rgba(255,248,231,0.82);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(107,136,200,0.2);
+    }
+    .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .logo img { height: 36px; width: auto; }
+    nav ul { list-style: none; display: flex; gap: 2rem; }
+    nav a {
+      font-size: 0.875rem; font-weight: 500;
+      color: var(--blue); text-decoration: none;
+      letter-spacing: 0.02em; transition: color 0.25s;
+    }
+    nav a:hover { color: var(--blue); font-weight: 600; }
+
+    /* LAYOUT */
+    main { position: relative; z-index: 1; }
+    .section {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: var(--section-gap) 5vw;
+      scroll-margin-top: 80px;
+    }
+    .section-label {
+      display: inline-block;
+      font-family: 'Syne', sans-serif;
+      font-size: 0.72rem; font-weight: 700;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--cyan); margin-bottom: 1rem;
+    }
+    h1, h2, h3 { font-family: 'Syne', sans-serif; line-height: 1.18; }
+    .section-title {
+      font-size: clamp(1.9rem, 4vw, 2.8rem);
+      font-weight: 800; margin-bottom: 1.4rem; color: var(--white);
+    }
+    .section-body {
+      font-size: 1.05rem; color: var(--gray);
+      max-width: 760px; margin-bottom: 1.2rem;
+    }
+
+    /* HERO */
+    #home {
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      justify-content: center; align-items: center;
+      text-align: center; padding: 120px 5vw 80px;
+      position: relative;
+    }
+    .hero-logo {
+      width: min(320px, 65vw); margin-bottom: 2.6rem;
+      filter: drop-shadow(0 0 30px rgba(61,78,172,0.3));
+      animation: fadeUp 0.9s ease both;
+    }
+    .hero-headline {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2.4rem, 6vw, 4.4rem);
+      font-weight: 800; line-height: 1.08;
+      letter-spacing: -0.02em; margin-bottom: 1.4rem;
+      animation: fadeUp 0.9s 0.1s ease both;
+    }
+    .hero-headline span { color: var(--cyan); }
+    .hero-sub {
+      font-size: clamp(1rem, 2vw, 1.2rem); color: var(--gray);
+      max-width: 620px; margin-bottom: 2.8rem;
+      animation: fadeUp 0.9s 0.2s ease both;
+    }
+    .cta-row {
+      display: flex; gap: 1rem; flex-wrap: wrap;
+      justify-content: center;
+      animation: fadeUp 0.9s 0.3s ease both;
+    }
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.75rem 1.8rem; border-radius: 10px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem; font-weight: 500;
+      text-decoration: none; transition: all 0.25s;
+      cursor: pointer; border: none;
+    }
+    .btn-primary {
+      background: var(--blue); color: #fff;
+      box-shadow: 0 4px 24px rgba(107,136,200,0.4);
+    }
+    .btn-primary:hover {
+      background: var(--blue-light); color: #fff; transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(107,136,200,0.5);
+    }
+    .btn-outline {
+      background: rgba(255,248,231,0.6); color: var(--blue);
+      border: 1px solid rgba(107,136,200,0.4);
+    }
+    .btn-outline:hover {
+      background: rgba(196,227,243,0.3); border-color: var(--blue-mid);
+      transform: translateY(-2px);
+    }
+    .scroll-hint {
+      position: absolute; bottom: 2.5rem; left: 50%;
+      transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 0.4rem;
+      color: var(--blue); font-size: 0.78rem;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      animation: bounce 2.2s infinite;
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50%       { transform: translateX(-50%) translateY(6px); }
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* STAT BAR */
+    .stat-bar {
+      background: rgba(255,248,231,0.6);
+      border-top: 1px solid rgba(107,136,200,0.2);
+      border-bottom: 1px solid rgba(107,136,200,0.2);
+      padding: 2.2rem 5vw;
+    }
+    .stat-inner {
+      max-width: 1080px; margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 1.5rem; text-align: center;
+    }
+    .stat-num {
+      font-family: 'Syne', sans-serif;
+      font-size: 2rem; font-weight: 800;
+      color: var(--cyan); display: block;
+    }
+    .stat-label { font-size: 0.82rem; color: var(--blue); letter-spacing: 0.04em; }
+
+    /* TWO-COL */
+    .two-col {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 3rem; align-items: start;
+    }
+    @media (max-width: 720px) { .two-col { grid-template-columns: 1fr; } }
+
+    /* CARDS */
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      padding: 1.6rem 1.8rem;
+      transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    }
+    .card:hover {
+      border-color: rgba(107,136,200,0.4);
+      transform: translateY(-3px);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.3);
+    }
+    .card h3 {
+      font-size: 1rem; font-weight: 700;
+      margin-bottom: 0.6rem; color: var(--blue-light);
+    }
+    .card p { font-size: 0.95rem; color: var(--gray); }
+    .card-cyan { border-color: rgba(61,78,172,0.25); }
+    .card-cyan h3 { color: var(--cyan); }
+
+    /* PILL GRID */
+    .pill-grid { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1.4rem; }
+    .pill {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.5rem 1.1rem; border-radius: 100px;
+      background: rgba(107,136,200,0.12);
+      border: 1px solid rgba(107,136,200,0.25);
+      font-size: 0.88rem; color: var(--blue-light); font-weight: 500;
+    }
+    .pill-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--cyan); flex-shrink: 0; }
+
+    /* STEPS GRID */
+    .steps {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 1.2rem; margin-top: 2rem;
+    }
+    .step-card {
+      background: var(--card-bg); border: 1px solid var(--card-border);
+      border-radius: var(--radius); padding: 1.5rem 1.6rem;
+      transition: all 0.3s;
+    }
+    .step-card:hover { border-color: rgba(61,78,172,0.3); transform: translateY(-3px); }
+    .step-num { font-size: 2rem; line-height: 1; margin-bottom: 0.6rem; }
+    .step-card h3 { font-size: 1rem; font-weight: 700; color: var(--white); margin-bottom: 0.5rem; }
+    .step-card p { font-size: 0.9rem; color: var(--gray); }
+
+    /* ROLE GRID */
+    .role-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1.2rem; margin-top: 2rem;
+    }
+    @media (max-width: 680px) { .role-grid { grid-template-columns: 1fr; } }
+
+    /* FIGURE */
+    .fig-wrap { margin: 2.5rem 0; text-align: center; }
+    .fig-wrap img {
+      max-width: 100%; border-radius: var(--radius);
+      border: 1px solid var(--card-border);
+      box-shadow: 0 12px 60px rgba(0,0,0,0.45);
+    }
+    .fig-caption { margin-top: 0.9rem; font-size: 0.83rem; color: var(--gray-dim); font-style: italic; }
+
+    /* RESULTS GRID */
+    .results-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.2rem; margin-top: 2rem;
+    }
+    .result-card {
+      background: var(--card-bg); border: 1px solid var(--card-border);
+      border-radius: var(--radius); padding: 1.5rem 1.6rem; transition: all 0.3s;
+    }
+    .result-card:hover { border-color: rgba(61,78,172,0.25); transform: translateY(-2px); }
+    .result-card h3 { font-size: 0.98rem; font-weight: 700; color: var(--cyan); margin-bottom: 0.5rem; }
+    .result-card p { font-size: 0.9rem; color: var(--gray); }
+
+    /* PERFORMANCE TABLE */
+    .perf-table { width: 100%; border-collapse: collapse; margin-top: 1.5rem; font-size: 0.9rem; }
+    .perf-table th {
+      text-align: left; padding: 0.7rem 1rem;
+      background: rgba(107,136,200,0.15); color: var(--blue-light);
+      font-family: 'Syne', sans-serif; font-size: 0.82rem;
+      letter-spacing: 0.05em; text-transform: uppercase;
+    }
+    .perf-table td { padding: 0.7rem 1rem; border-bottom: 1px solid rgba(107,136,200,0.1); color: var(--gray); }
+    .perf-table tr:last-child td { border-bottom: none; }
+    .highlight { color: var(--blue); font-weight: 600; }
+
+    /* NETWORK BADGES */
+    .network-badges { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 1rem; }
+    .badge {
+      padding: 0.35rem 0.9rem; border-radius: 6px;
+      background: rgba(107,136,200,0.15); border: 1px solid rgba(107,136,200,0.25);
+      font-size: 0.82rem; color: var(--blue-light); font-weight: 500;
+    }
+
+    /* DROPDOWN */
+    details {
+      background: var(--card-bg); border: 1px solid var(--card-border);
+      border-radius: var(--radius); margin-top: 1.2rem; overflow: hidden;
+      transition: border-color 0.3s;
+    }
+    details[open] { border-color: rgba(107,136,200,0.35); }
+    summary {
+      padding: 1.1rem 1.5rem; cursor: pointer;
+      font-family: 'Syne', sans-serif; font-size: 0.95rem; font-weight: 700;
+      color: var(--blue-light); list-style: none;
+      display: flex; justify-content: space-between; align-items: center;
+      user-select: none;
+    }
+    summary::-webkit-details-marker { display: none; }
+    summary::after { content: '+'; font-size: 1.3rem; font-weight: 300; transition: transform 0.3s; }
+    details[open] summary::after { transform: rotate(45deg); }
+    .details-body { padding: 0 1.5rem 1.4rem; font-size: 0.92rem; color: var(--gray); line-height: 1.75; }
+    .details-body ul { margin-top: 0.6rem; padding-left: 1.2rem; }
+    .details-body li { margin-bottom: 0.3rem; }
+
+    /* CONCLUSION */
+    .conclusion-box {
+      background: linear-gradient(135deg, rgba(107,136,200,0.15), rgba(196,227,243,0.15));
+      border: 1px solid rgba(107,136,200,0.25);
+      border-radius: var(--radius); padding: 2.2rem 2.4rem; margin-top: 2rem;
+    }
+    .conclusion-box p { font-size: 1.05rem; color: var(--gray); margin-bottom: 1rem; }
+    .conclusion-box p:last-child { margin-bottom: 0; }
+
+    /* TEAM */
+    .team-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1.1rem; margin-top: 2rem;
+    }
+    .team-card {
+      background: var(--card-bg); border: 1px solid var(--card-border);
+      border-radius: var(--radius); padding: 1.4rem 1.5rem; transition: all 0.3s;
+    }
+    .team-card:hover { border-color: rgba(107,136,200,0.4); transform: translateY(-2px); }
+    .team-name { font-family: 'Syne', sans-serif; font-size: 0.98rem; font-weight: 700; color: var(--white); margin-bottom: 0.2rem; }
+    .team-role { font-size: 0.78rem; color: var(--cyan); margin-bottom: 0.5rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em; }
+    .team-email { font-size: 0.8rem; color: var(--gray-dim); text-decoration: none; transition: color 0.2s; }
+    .team-email:hover { color: var(--blue-light); }
+    .mentor-card { border-color: rgba(61,78,172,0.25); grid-column: 1 / -1; display: flex; align-items: center; gap: 1.5rem; }
+    .mentor-tag {
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--cyan); padding: 0.25rem 0.7rem; border-radius: 100px;
+      border: 1px solid rgba(61,78,172,0.3); white-space: nowrap;
+    }
+
+    /* DIVIDER */
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(107,136,200,0.35), transparent);
+      max-width: 1080px; margin: 0 auto;
+    }
+
+    /* SUBSECTION HEADING */
+    .sub-heading {
+      font-family: 'Syne', sans-serif; font-size: 1.4rem;
+      font-weight: 700; margin-bottom: 0.8rem; margin-top: 3rem; color: var(--white);
+    }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid rgba(107,136,200,0.25);
+      padding: 2.5rem 5vw; text-align: center;
+      font-size: 0.85rem; color: var(--gray-dim);
+    }
+    footer a { color: var(--blue-light); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+
+    @media (max-width: 600px) {
+      header { padding: 0 4vw; }
+      nav ul { gap: 1.2rem; }
+      nav a { font-size: 0.78rem; }
+      .mentor-card { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+    }
+  </style>
 </head>
 <body>
 
 <header>
-  <div class="header-content">
-    <a href="#home" class="logo-centered">
-      <img src="img/updated_logo.png" alt="Vera Logo">
-    </a>
-  </div>
+  <a href="#home" class="logo">
+    <img src="img/updated_logo.png" alt="Vera Logo">
+  </a>
   <nav>
     <ul>
-      <li><a href="#home">Home</a></li>
-      <li><a href="#about">About</a></li>
-      <li><a href="#docs">Documentation</a></li>
-      <li><a href="#architecture">Architecture</a></li>
-      <li><a href="#workflow">Workflow</a></li>
+      <li><a href="#intro">Introduction</a></li>
+      <li><a href="#how">How It Works</a></li>
+      <li><a href="#results">Results</a></li>
       <li><a href="#team">Team</a></li>
     </ul>
   </nav>
@@ -30,174 +386,343 @@
 <main>
 
 <!-- HERO -->
-<section id="home" class="hero">
-  <h1>Vera: Blockchain-Backed Trust</h1>
-  <img src="img/updated_logo.png" alt="Vera Logo">
-  <p>A decentralized platform for verifying documents, datasets, and media with cryptographic certainty.</p>
-
-  <div class="cta-group">
-    <a href="https://github.com/FerdGitUCSD/b10-blockchain-blockthentic" class="btn btn-secondary" target="_blank">GitHub</a>
-    <a href="YOUR_POSTER_URL" class="btn btn-secondary" target="_blank">Poster</a>
-    <a href="YOUR_REPORT_URL" class="btn btn-secondary" target="_blank">Report</a>
-    <a href="YOUR_VERA_PROJECT_URL" class="btn btn-primary" target="_blank">Launch App</a>
+<section id="home">
+  <img src="img/updated_logo.png" alt="Vera Logo" class="hero-logo">
+  <h1 class="hero-headline">Can you <span>trust</span> a digital file?</h1>
+  <p class="hero-sub">
+    Vera is a blockchain-backed platform that lets anyone independently verify the authenticity of documents, datasets, and media — without relying on a central authority.
+  </p>
+  <div class="cta-row">
+    <a href="https://github.com/FerdGitUCSD/b10-blockchain-blockthentic" class="btn btn-outline" target="_blank">
+      <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+      GitHub
+    </a>
+    <a href="YOUR_POSTER_URL" class="btn btn-outline" target="_blank">Poster</a>
+    <a href="YOUR_REPORT_URL" class="btn btn-outline" target="_blank">Report</a>
+    <a href="https://ferdgitucsd.github.io/b10-blockchain-blockthentic/" class="btn btn-primary" target="_blank">Launch Vera →</a>
+  </div>
+  <div class="scroll-hint">
+    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+    Scroll to explore
   </div>
 </section>
 
-<!-- FEATURES -->
-<section class="features">
-  <h2>Core Capabilities</h2>
-  <ul>
-    <li>Decentralized verification with public blockchain trust guarantees.</li>
-    <li>Cryptographic fingerprinting ensures files cannot be altered undetected.</li>
-    <li>Issuer authorization prevents fraudulent registrations.</li>
-    <li>Revocation and updates supported through dynamic on-chain state.</li>
-    <li>Privacy-preserving design — only hashes stored on chain.</li>
-    <li>Supports documents, datasets, and visual media.</li>
-  </ul>
-</section>
+<!-- STAT BAR -->
+<div class="stat-bar">
+  <div class="stat-inner">
+    <div><span class="stat-num">3</span><span class="stat-label">Asset Types Supported</span></div>
+    <div><span class="stat-num">~$0.01</span><span class="stat-label">Avg. Transaction Fee</span></div>
+    <div><span class="stat-num">~5s</span><span class="stat-label">Transaction Finality</span></div>
+    <div><span class="stat-num">92+</span><span class="stat-label">TPS on Polygon</span></div>
+    <div><span class="stat-num">100%</span><span class="stat-label">Verification Accuracy</span></div>
+  </div>
+</div>
 
-<!-- ABOUT -->
-<section id="about" class="content-section">
-  <h1>About Vera</h1>
-
-  <p>
-    Vera is a decentralized verification infrastructure designed to establish authenticity,
-    integrity, and traceability for digital assets. Traditional verification methods rely on
-    centralized institutions, manual review processes, or platform-specific trust assumptions,
-    which introduce delays, cost, and security vulnerabilities. Vera replaces these approaches
-    with a trustless verification model powered by Ethereum smart contracts and client-side
-    cryptographic hashing.
+<!-- INTRODUCTION -->
+<section id="intro" class="section">
+  <span class="section-label">Introduction</span>
+  <h2 class="section-title">The problem with trusting digital files</h2>
+  <p class="section-body">
+    Every day, contracts are signed, research datasets are shared, and images are used as evidence — yet recipients often have no reliable way to confirm whether a file is genuine, whether it has been altered, or whether it comes from a trusted source. Advances in AI-generated content and editing tools have made convincing forgeries easier than ever to produce.
+  </p>
+  <p class="section-body">
+    Traditional solutions rely on centralized institutions that introduce delays, costs, and single points of failure. And while early blockchain systems could prove a file existed at some point in time, they couldn't answer the questions that matter most: <em>Who registered it? Is it still valid? Has it been revoked?</em>
+  </p>
+  <p class="section-body">
+    <strong style="color:var(--blue)">Vera solves this.</strong> By recording cryptographic fingerprints — not the files themselves — on the Ethereum blockchain, Vera provides permanent, tamper-proof proof of a file's authenticity, issuer identity, and current status, verifiable by anyone in seconds at nearly no cost.
   </p>
 
-  <p>
-    Instead of storing files on the blockchain, Vera records cryptographic fingerprints and
-    structured metadata. This ensures privacy while still allowing anyone to independently
-    confirm whether a file is genuine. Verification is modeled as a dynamic blockchain state,
-    meaning assets can be revoked, updated, or superseded without compromising auditability.
-  </p>
-
-  <!-- INSERT DIAGRAM HERE -->
-  <img src="img/Figure 2.png" alt="System Overview Diagram">
-
-  <p>
-    The platform is designed for real-world usability across institutions, enterprises, and
-    independent users, supporting scalable verification workflows without requiring technical
-    blockchain expertise.
-  </p>
-</section>
-
-<!-- DOCUMENTATION -->
-<section id="docs" class="content-section">
-  <h1>Technical Documentation</h1>
-
-  <div class="doc-box">
-    <h2>Smart Contract Layer</h2>
-    <p>
-      Vera uses a modular smart contract architecture where separate registries manage different
-      asset categories. Each registry maintains mappings between cryptographic hashes and
-      structured verification records.
-    </p>
-    <ul>
-      <li>Document Registry</li>
-      <li>Dataset Registry</li>
-      <li>Media Registry</li>
-      <li>Issuer Authorization Logic</li>
-      <li>Revocation and Status Management</li>
-    </ul>
+  <div class="two-col" style="margin-top:2.5rem">
+    <div>
+      <div class="card" style="margin-bottom:1rem">
+        <h3>🔒 The Old Way</h3>
+        <p>Centralized authorities, manual review processes, and platform-specific trust assumptions. Slow, expensive, and vulnerable to fraud or institutional failure.</p>
+      </div>
+      <div class="card">
+        <h3>⛓️ Simple Blockchain (Before Vera)</h3>
+        <p>Existing blockchain proofs only showed a file existed — they couldn't enforce who registered it, confirm its current validity, or support revocation when circumstances change.</p>
+      </div>
+    </div>
+    <div class="card card-cyan" style="height:100%">
+      <h3>✅ Vera's Approach</h3>
+      <p>Cryptographic fingerprints anchored on-chain with full lifecycle management. Authorized issuers register assets. Anyone can verify. Revocation is instantaneous and auditable. Your raw file never touches the blockchain.</p>
+      <div class="pill-grid">
+        <span class="pill"><span class="pill-dot"></span>Privacy-preserving</span>
+        <span class="pill"><span class="pill-dot"></span>Issuer-authorized</span>
+        <span class="pill"><span class="pill-dot"></span>Revocable</span>
+        <span class="pill"><span class="pill-dot"></span>Trustless verification</span>
+        <span class="pill"><span class="pill-dot"></span>Free to verify</span>
+      </div>
+    </div>
   </div>
 
-  <div class="doc-box">
-    <h2>Verification Engine</h2>
-    <p>
-      All verification occurs through deterministic hashing performed locally in the browser.
-      When a file is uploaded, the application computes its hash and compares it with on-chain
-      records using read-only smart contract queries. No raw data is transmitted to the network.
-    </p>
-  </div>
-
-  <div class="doc-box">
-    <h2>Off-Chain Infrastructure</h2>
-    <p>
-      Supporting infrastructure handles non-sensitive application logic including metadata
-      storage, issuer permissions, and user state. This separation reduces blockchain storage
-      costs while preserving transparency and verifiability.
-    </p>
+  <h3 class="sub-heading">Three types of assets supported</h3>
+  <div class="steps">
+    <div class="step-card">
+      <div class="step-num">📄</div>
+      <h3>Documents</h3>
+      <p>Legal agreements, certificates, compliance records, academic credentials — anything that needs a tamper-proof paper trail.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num">📊</div>
+      <h3>Datasets</h3>
+      <p>Research data, CSV files, structured datasets — verify that the data you received is exactly what was originally published.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num">🖼️</div>
+      <h3>Visual Media</h3>
+      <p>Images and videos — confirm authenticity and provenance for journalism, legal evidence, or media distribution.</p>
+    </div>
   </div>
 </section>
 
-<!-- ARCHITECTURE -->
-<section id="architecture" class="content-section">
-  <h1>System Architecture</h1>
+<div class="divider"></div>
 
-  <p>
-    Vera follows a layered architecture separating user interaction, application processing,
-    and blockchain verification. This design ensures modularity, security, and scalability.
+<!-- HOW IT WORKS -->
+<section id="how" class="section">
+  <span class="section-label">How It Works</span>
+  <h2 class="section-title">Verification without a middleman</h2>
+  <p class="section-body">
+    Vera is built around a simple but powerful insight: you don't need to store a file to prove it's real — you just need to store its <em>fingerprint</em>. A cryptographic hash is a unique, fixed-length string derived mathematically from a file's exact contents. Change even one byte, and the hash changes completely. Vera stores these fingerprints on-chain so anyone can check them independently, forever.
   </p>
 
-
-  <img src="img/Figure 1.png" alt="Architecture Diagram">
-
-  <p>
-    Users interact through a web interface where files are hashed locally and verification
-    requests are initiated. The application layer manages wallet connections and blockchain
-    queries. Smart contracts enforce verification logic, issuer permissions, and record
-    lifecycle state, while the Ethereum network acts as a tamper-resistant trust anchor.
-    Off-chain services store metadata and manage access control without exposing asset contents.
-  </p>
-</section>
-
-<!-- WORKFLOW -->
-<section id="workflow" class="content-section">
-  <h1>Verification Workflow</h1>
-
-  <p>
-    Vera supports three primary user roles: Issuers, Asset Holders, and Verifiers. Each role
-    interacts with the same infrastructure but through tailored interfaces that guide permitted
-    actions and reduce complexity.
-  </p>
-
-
-  <div class="workflow-images">
-    <img src="img/Figure 3.png" alt="Workflow Diagram">
-    <img src="img/Figure 4.png" alt="Third Party Verification Workflow Diagram">
+  <div class="fig-wrap">
+    <img src="img/Figure 1.png" alt="High-Level System Architecture of Vera">
+    <p class="fig-caption">Fig. 1 — Vera's layered architecture: a web interface feeds into application logic (client-side hashing, wallet connection, state queries), which communicates with Ethereum smart contracts, backed by an off-chain database for metadata and governance.</p>
   </div>
 
-  <ul>
-    <li><strong>Issuers:</strong> Register assets, update records, or revoke validity.</li>
-    <li><strong>Holders:</strong> View and share verification proofs.</li>
-    <li><strong>Verifiers:</strong> Independently confirm authenticity without authentication.</li>
-  </ul>
+  <h3 class="sub-heading">Three roles, one infrastructure</h3>
+  <p class="section-body">Vera separates everyone involved in verification into three distinct roles, each with a tailored experience built on the same underlying system:</p>
+  <div class="role-grid">
+    <div class="card">
+      <div style="font-size:1.8rem;margin-bottom:0.8rem">🏛️</div>
+      <h3>Issuers</h3>
+      <p>Authorized organizations — universities, governments, companies — who register, update, or revoke assets. Issuers connect a crypto wallet to sign blockchain transactions.</p>
+    </div>
+    <div class="card">
+      <div style="font-size:1.8rem;margin-bottom:0.8rem">🙋</div>
+      <h3>Asset Holders</h3>
+      <p>Individuals or organizations assigned a verified asset. They can view their assets and share verification proofs with anyone who needs to confirm them.</p>
+    </div>
+    <div class="card">
+      <div style="font-size:1.8rem;margin-bottom:0.8rem">🔍</div>
+      <h3>Verifiers</h3>
+      <p>Anyone who wants to check a file — no account, no wallet, no fees required. Upload the file, get an instant on-chain result: Active, Revoked, or Unverified.</p>
+    </div>
+  </div>
 
-  <p>
-    This workflow ensures that verification remains transparent and independent while allowing
-    authorized entities to maintain lifecycle control over issued assets.
+  <h3 class="sub-heading">Registering an asset</h3>
+  <p class="section-body">When an issuer registers a new asset, the file never leaves their device. Only its cryptographic fingerprint gets committed to the blockchain:</p>
+  <div class="fig-wrap">
+    <img src="img/Figure 2.png" alt="Asset Registration Workflow">
+    <p class="fig-caption">Fig. 2 — Asset Registration Workflow: Upload → Hash (SHA-256, local) → Wallet signs → Smart contract validates issuer → Store hash + metadata → Emit event.</p>
+  </div>
+
+  <details>
+    <summary>Technical detail: how SHA-256 fingerprinting works</summary>
+    <div class="details-body">
+      <p>Every file is read as raw binary data. Vera applies the SHA-256 cryptographic hash function (recommended by NIST) to produce a 256-bit digest that uniquely represents that file's exact contents. This process runs locally on the user's device — nothing is uploaded before the hash is computed.</p>
+      <ul>
+        <li><strong>Deterministic:</strong> the same file always produces the same hash.</li>
+        <li><strong>Collision-resistant:</strong> it is computationally infeasible to find two different files with the same hash.</li>
+        <li><strong>One-way:</strong> the original file cannot be reconstructed from its hash, preserving privacy.</li>
+      </ul>
+      <p style="margin-top:0.8rem">Asset-specific metadata is recorded alongside the hash: datasets may include version identifiers; visual media may include format metadata. Smart contract storage maps each hash to a structured record containing the issuer address, registration timestamp, asset type, and a current validity status flag.</p>
+    </div>
+  </details>
+
+  <h3 class="sub-heading">Verifying an asset (anyone can do this)</h3>
+  <p class="section-body">Verification is completely open and read-only — no wallet, no account, no gas fees required at any point:</p>
+  <div class="fig-wrap">
+    <img src="img/Figure 3.png" alt="Third-Party Verification Workflow">
+    <p class="fig-caption">Fig. 3 — Third-Party Verification Workflow: Upload file → hash computed locally → read-only smart contract query → result returned (Active / Revoked / Unverified).</p>
+  </div>
+
+  <h3 class="sub-heading">A modular smart contract system</h3>
+  <p class="section-body">
+    At the core of Vera is a factory-based smart contract architecture. A <code style="background:rgba(107,136,200,0.2);padding:0.1em 0.4em;border-radius:4px;font-size:0.88em;color:var(--blue)">RegistryFactory</code> contract dynamically spawns separate registries for documents, datasets, and media. This keeps asset categories modular and independently maintainable while sharing the same verification interface and revocation logic.
+  </p>
+  <div class="fig-wrap">
+    <img src="img/Figure 4.png" alt="Multi-Registry Smart Contract Architecture">
+    <p class="fig-caption">Fig. 4 — Multi-Registry Architecture. One access control layer feeds into three specialized registries (Document, Dataset, Media), all routing through a shared Revocation Mechanism.</p>
+  </div>
+
+  <details>
+    <summary>Technical detail: hybrid governance model</summary>
+    <div class="details-body">
+      <p>Vera uses a deliberate two-layer governance approach that balances security with flexibility:</p>
+      <ul>
+        <li><strong>On-chain:</strong> Registry contracts enforce an <code>onlyOwner</code> restriction — only the authorized wallet can submit state-changing transactions (registrations, revocations).</li>
+        <li><strong>Off-chain (Supabase RLS):</strong> Fine-grained role distinctions — Administrators vs. standard Users — are enforced through database Row-Level Security policies. Admins can register and revoke; standard users can only view and verify. Registry owners can invite additional administrators without redeploying any contracts.</li>
+      </ul>
+      <p style="margin-top:0.8rem">This hybrid model means governance rules can be updated dynamically while immutability guarantees on the blockchain remain intact for all on-chain records.</p>
+    </div>
+  </details>
+
+  <h3 class="sub-heading">Assets have a lifecycle, not just a timestamp</h3>
+  <p class="section-body">
+    Unlike simple proof-of-existence systems, Vera treats verification as a <em>dynamic state</em>. An asset can be Active, Revoked, or Superseded. Status changes are implemented as flag transitions — old records are never deleted, so the full history remains auditable at any time.
+  </p>
+  <div class="fig-wrap" style="max-width:520px;margin-left:auto;margin-right:auto;">
+    <img src="img/Figure 5.png" alt="Asset Lifecycle State Model">
+    <p class="fig-caption">Fig. 5 — Asset Lifecycle State Model. Revocation updates a status flag rather than deleting the record, preserving historical auditability.</p>
+  </div>
+
+  <h3 class="sub-heading">Deployed across multiple networks</h3>
+  <p class="section-body">Smart contracts were validated across three EVM-compatible public test networks for cross-chain compatibility:</p>
+  <div class="network-badges">
+    <span class="badge">Ethereum Sepolia</span>
+    <span class="badge">Arbitrum Sepolia</span>
+    <span class="badge">Polygon Amoy</span>
+  </div>
+  <p class="section-body" style="margin-top:1.2rem">
+    Vera's primary deployment target is the <strong style="color:var(--blue)">Polygon PoS network</strong>, selected for its low fees (~$0.01/tx), rapid finality (~5 seconds), and proven scale (6.58 billion total transactions processed, 569 million addresses).
   </p>
 </section>
 
-<section id="demo" class="content-section">
-  <h1>Demo</h1>
+<div class="divider"></div>
+
+<!-- RESULTS -->
+<section id="results" class="section">
+  <span class="section-label">Results &amp; Conclusion</span>
+  <h2 class="section-title">What we proved it can do</h2>
+  <p class="section-body">
+    The system was validated under live public test network conditions — not a controlled simulation — across Ethereum Sepolia, Arbitrum Sepolia, and Polygon Amoy. All core functionality was confirmed to work reliably at production scale.
+  </p>
+
+  <div class="results-grid">
+    <div class="result-card">
+      <h3>✅ Perfect Registration Accuracy</h3>
+      <p>Across all three asset types, computed hashes consistently matched on-chain records. Identical files always produced identical hashes; any modification produced a completely different fingerprint with no collisions.</p>
+    </div>
+    <div class="result-card">
+      <h3>🔒 Governance Enforcement Confirmed</h3>
+      <p>Unauthorized users were blocked from restricted operations through coordinated on-chain ownership checks and database policy enforcement. Admins completed full registration and revocation workflows without issue.</p>
+    </div>
+    <div class="result-card">
+      <h3>🔄 Lifecycle Transitions Work</h3>
+      <p>Assets were registered, updated, assigned to users, and revoked — all while maintaining complete historical auditability. Revoked assets remained queryable but were clearly flagged as invalid.</p>
+    </div>
+    <div class="result-card">
+      <h3>⚡ Frictionless Third-Party Verification</h3>
+      <p>Verifiers confirmed asset authenticity with zero gas fees and no wallet required. Modified files were correctly rejected; unregistered files returned negative responses; revoked assets were correctly identified.</p>
+    </div>
+    <div class="result-card">
+      <h3>📱 End-to-End Workflow Validated</h3>
+      <p>All user workflows — authentication via Supabase, wallet connection via WalletConnect, registry creation, asset registration, and verification — executed successfully across all supported test networks.</p>
+    </div>
+    <div class="result-card">
+      <h3>👤 Usable Without Blockchain Expertise</h3>
+      <p>Test participants completed full issuer and verifier workflows with no prior blockchain experience. Complex cryptographic and transaction-signing operations were abstracted into clear guided steps.</p>
+    </div>
+  </div>
+
+  <h3 class="sub-heading">Network Performance: Why Polygon?</h3>
+  <p class="section-body">Polygon was selected as the primary deployment network based on empirical scalability and cost measurements:</p>
+  <table class="perf-table">
+    <thead>
+      <tr><th>Metric</th><th>Polygon PoS ✓</th><th>Arbitrum</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Real-time throughput</td><td class="highlight">~92.6 TPS</td><td>~34.9 TPS</td></tr>
+      <tr><td>Max observed throughput</td><td>537.5 TPS</td><td>2,036 TPS</td></tr>
+      <tr><td>Average block time</td><td class="highlight">~2 seconds</td><td>~0.25 seconds</td></tr>
+      <tr><td>Transaction finality</td><td class="highlight">~5 seconds</td><td>~13 min 48 sec</td></tr>
+      <tr><td>Avg. transaction fee</td><td class="highlight">~$0.01 USD</td><td>Variable</td></tr>
+      <tr><td>24-hour transactions</td><td>9.7 million</td><td>—</td></tr>
+      <tr><td>Network utilization</td><td>65% (capacity to grow)</td><td>—</td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:0.82rem;color:var(--gray);margin-top:0.6rem">Arbitrum's optimistic rollup architecture provides higher theoretical throughput peaks but introduces 13+ minute settlement finality — impractical for real-time verification use cases.</p>
+
+  <h3 class="sub-heading">What this means</h3>
+  <div class="conclusion-box">
+    <p>Vera demonstrates that a decentralized verification system can simultaneously achieve <strong style="color:var(--blue)">correctness</strong>, <strong style="color:var(--blue)">usability</strong>, and <strong style="color:var(--blue)">governance flexibility</strong> — something previous systems have consistently struggled to balance. It goes beyond static proof-of-existence to provide full lifecycle management of heterogeneous digital assets.</p>
+    <p>By combining on-chain hash anchoring with off-chain storage and governance enforcement, Vera preserves cryptographic trust guarantees while remaining institutionally manageable and accessible to everyday users without blockchain expertise.</p>
+    <p>Future development will expand contract-level access control, optimize network selection for production environments, and strengthen decentralized governance — moving Vera toward real-world deployment across legal, academic, scientific, and media domains.</p>
+  </div>
+
+  <details style="margin-top:1.5rem">
+    <summary>Discussion: limitations and future directions</summary>
+    <div class="details-body">
+      <p>The current implementation has a few known limitations worth acknowledging:</p>
+      <ul>
+        <li><strong>Partial off-chain governance:</strong> Fine-grained role management currently relies on Supabase Row-Level Security policies. Full decentralization of role management would require additional on-chain access control logic (e.g., OpenZeppelin AccessControl).</li>
+        <li><strong>Gas variability:</strong> Write operations (registration, revocation) remain subject to network congestion and gas price fluctuations, though the primary Polygon deployment keeps this minimal (~$0.01/tx).</li>
+        <li><strong>Factory pattern tradeoffs:</strong> The RegistryFactory pattern improves scalability but adds an abstraction layer requiring careful version management during contract upgrades.</li>
+      </ul>
+      <p style="margin-top:0.8rem">Planned improvements include contract-level role abstractions, optimized layer-2 deployment strategies, and enhanced cross-chain interoperability to support production-scale institutional deployments.</p>
+    </div>
+  </details>
 </section>
+
+<div class="divider"></div>
 
 <!-- TEAM -->
-<section id="team" class="content-section">
-  <h1>Team</h1>
-  <ul>
-    <li>Snigdha Podugu — spodugu@ucsd.edu</li>
-    <li>Fred Danese — fdanese@ucsd.edu</li>
-    <li>Ryan Cheung — rycheung@ucsd.edu</li>
-    <li>Jonathan Gu — jogu@ucsd.edu</li>
-    <li>Andres Riera Ortiz Parraga — arieraortizparraga@ucsd.edu</li>
-    <li>Mentor: Rajesh Gupta — rgupta@ucsd.edu</li>
-  </ul>
-
+<section id="team" class="section">
+  <span class="section-label">Team</span>
+  <h2 class="section-title">The Team behind Vera</h2>
+ 
+  <div class="team-grid">
+    <div class="team-card">
+      <div class="team-name">Snigdha Podugu</div>
+      <a href="mailto:spodugu@ucsd.edu" class="team-email">spodugu@ucsd.edu</a>
+    </div>
+    <div class="team-card">
+      <div class="team-name">Fred Danese</div>
+      <a href="mailto:fdanese@ucsd.edu" class="team-email">fdanese@ucsd.edu</a>
+    </div>
+    <div class="team-card">
+      <div class="team-name">Ryan Cheung</div>
+      <a href="mailto:rycheung@ucsd.edu" class="team-email">rycheung@ucsd.edu</a>
+    </div>
+    <div class="team-card">
+      <div class="team-name">Jonathan Gu</div>
+      <a href="mailto:jogu@ucsd.edu" class="team-email">jogu@ucsd.edu</a>
+    </div>
+    <div class="team-card">
+      <div class="team-name">Andres Riera Ortiz Parraga</div>
+      <a href="mailto:arieraortizparraga@ucsd.edu" class="team-email">arieraortizparraga@ucsd.edu</a>
+    </div>
+    <div class="team-card mentor-card">
+      <span class="mentor-tag">Mentor</span>
+      <div>
+        <div class="team-name">Prof. Rajesh Gupta</div>
+        <a href="mailto:rgupta@ucsd.edu" class="team-email">rgupta@ucsd.edu</a>
+      </div>
+    </div>
+  </div>
 </section>
 
 </main>
 
 <footer>
-  <p>&copy; 2026 Vera Capstone Project — Decentralized Verification Infrastructure</p>
+  <p style="margin-bottom:0.6rem">
+    <a href="https://github.com/FerdGitUCSD/b10-blockchain-blockthentic" target="_blank">GitHub Repository</a>
+    &nbsp;·&nbsp;
+    <a href="YOUR_REPORT_URL" target="_blank">Full Technical Report</a>
+    &nbsp;·&nbsp;
+    <a href="YOUR_POSTER_URL" target="_blank">Project Poster</a>
+    &nbsp;·&nbsp;
+    <a href="YOUR_VERA_PROJECT_URL" target="_blank">Launch App</a>
+  </p>
+  <p>&copy; 2026 Vera Capstone Project — UC San Diego DSC 180B · Decentralized Verification Infrastructure</p>
 </footer>
 
-<script src="js/main.js"></script>
+<script>
+  // Highlight active nav link on scroll
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('nav a');
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        navLinks.forEach(a => {
+          a.style.color = a.getAttribute('href') === '#' + e.target.id ? 'var(--blue)' : '';
+        });
+      }
+    });
+  }, { rootMargin: '-40% 0px -55% 0px' });
+  sections.forEach(s => obs.observe(s));
+</script>
 </body>
 </html>
